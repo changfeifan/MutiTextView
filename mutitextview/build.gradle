@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 //apply plugin: 'com.jfrog.bintray'
-//apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'maven'
 
 android {
@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        group = 'com.changfeifan.mutitextview' // Change this to match your package name
+        group = 'com.github.changfeifan' // Change this to match your package name
         version = '1.0.0' // Change this to match your version number
     }
     buildTypes {

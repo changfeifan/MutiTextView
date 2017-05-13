@@ -3,18 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
     tools:context="com.changfeifan.mutitextviewdemo.MainActivity">
 
-   <com.changfeifan.mutitextview.MutiTextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       app:leftText="DemoLeft"
-       app:leftTextSize="12dp"
-       app:leftTextColor="#000000"
-       app:rightText="DemoRight"
-       app:rightTextSize="30dp"
-       app:rightTextColor="#00FF00"
-       />
+    <com.changfeifan.mutitextview.MutiTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:leftText="DemoLeft"
+        app:leftTextColor="#000000"
+        app:leftTextSize="12dp"
+        app:rightText="DemoRight"
+        app:rightTextColor="#00FF00"
+        app:rightTextSize="30dp" />
+
+    <com.changfeifan.mutitextview.widget.MutiTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:leftText="Demo1"
+        app:leftTextColor="#000000"
+        app:leftTextSize="20dp"
+        app:rightText="Demo2"
+        app:rightTextColor="#00FF00"
+        app:rightTextSize="50dp" />
+
 
 </android.support.constraint.ConstraintLayout>
