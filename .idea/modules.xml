@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MutiTextView.iml" filepath="$PROJECT_DIR$/MutiTextView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MutiTextViewDemo.iml" filepath="$PROJECT_DIR$/MutiTextViewDemo.iml" />
     </modules>
   </component>
 </project>
