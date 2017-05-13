@@ -44,7 +44,12 @@ write this in your layout.
      app:rightText="DemoRight"
      app:rightTextColor="#00FF00"
      app:rightTextSize="30dp" />
-
 ```
 
+
+## Contact
+
+**wechat:** changfeifan002
+
+**Email:** 283410998@qq.com  /	 Changfeifan1993@gmail.com
 
