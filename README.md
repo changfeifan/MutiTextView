@@ -26,7 +26,7 @@ then write at the **build.gradle** (app or which projcect you want to use).
 
 ```
 dependencies {
-	compile 'com.github.changfeifan:MutiTextView:1.0.0'
+	compile 'com.github.changfeifan:MutiTextView:1.0.1'
 }
 
 ```
@@ -46,6 +46,20 @@ write this in your layout.
      app:rightTextSize="30dp" />
 ```
 
+## v1.0.1 added & fix
+
+you can use new functions to set the text.
+
+```
+setTextLeft(String string);
+setTextRight(String string);
+
+```
+
+or get the Text
+	
+	getTextLeft();
+	getTextRight();
 
 ## Contact
 
