@@ -10,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 /**
  * Created by changfeifan on 2017/5/12.
@@ -22,6 +24,12 @@ public class MutiTextView extends View {
 
     String textLeft = "";
     String textRight = "";
+
+    Rect rectLeft;
+    Rect rectRight;
+    ViewParent viewParent;
+
+    int ChineseDeviation = 3;//中文输入时会有问题,right和bottom边缘被裁切。加3px.
 
     public MutiTextView(Context context) {
         this(context, null);
@@ -52,31 +60,36 @@ public class MutiTextView extends View {
             textLeft = a.getString(R.styleable.MutiTextView_leftText);
             textRight = a.getString(R.styleable.MutiTextView_rightText);
         }
-
-//        a.recycle();
     }
 
+    /**
+    * 重构页面时计算边缘大小。
+    * */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        Rect rectLeft = new Rect();
+        rectLeft = new Rect();
         textPaintLeft.getTextBounds(textLeft, 0, textLeft.length(), rectLeft);
-        Rect rectRight = new Rect();
+        rectRight = new Rect();
         textPaintRight.getTextBounds(textRight, 0, textRight.length(), rectRight);
 
-        setMeasuredDimension(rectLeft.width() + rectRight.width(), Math.max(rectLeft.height(), rectRight.height()));
+        int width = rectLeft.width() + rectRight.width() + getPaddingLeft() + getPaddingRight();
+        int height = Math.max(rectLeft.height(), rectRight.height()) + getPaddingTop() + getPaddingBottom();
 
-//        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(width + ChineseDeviation, height + ChineseDeviation);
+
     }
 
+    /**
+     * draw texts
+     * */
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-
-        Rect rectLeft = new Rect();
+        rectLeft = new Rect();
         textPaintLeft.getTextBounds(textLeft, 0, textLeft.length(), rectLeft);
-        Rect rectRight = new Rect();
+        rectRight = new Rect();
         textPaintRight.getTextBounds(textRight, 0, textRight.length(), rectRight);
 
         if (textPaintLeft.getTextSize() > textPaintRight.getTextSize()) {
@@ -88,4 +101,74 @@ public class MutiTextView extends View {
         }
 
     }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+//        Log.e("onLayout", "onLayout");
+    }
+
+    public String getTextLeft() {
+        return textLeft;
+    }
+
+    public void setTextLeft(String textLeft) {
+        this.textLeft = textLeft;
+        resetView();
+    }
+
+    public String getTextRight() {
+        return textRight;
+    }
+
+    public void setTextRight(String textRight) {
+        this.textRight = textRight;
+        resetView();
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+    }
+
+    /**
+     * 文字更改的时候调用此方法
+     * reset all view
+     * 默认居中在父中间。下版本进行布局gravity适配。
+     * */
+    public void resetView() {
+        rectLeft = new Rect();
+        rectRight = new Rect();
+        textPaintLeft.getTextBounds(textLeft, 0, textLeft.length(), rectLeft);
+        textPaintRight.getTextBounds(textRight, 0, textRight.length(), rectRight);
+
+        //获取父容器view
+        viewParent = getParent();
+
+        int leftParent = getLeft();
+        int rightParent = getRight();
+        int topParent = getTop();
+        int bottomParent = getBottom();
+
+        if (viewParent != null) {
+
+            leftParent = ((ViewGroup) viewParent).getLeft();
+            rightParent = ((ViewGroup) viewParent).getRight();
+            topParent = ((ViewGroup) viewParent).getTop();
+            bottomParent = ((ViewGroup) viewParent).getBottom();
+        }
+
+        int leftNew = ((rightParent - leftParent) - (rectLeft.width() + rectRight.width())) / 2;
+        int topNew = getTop();
+        int rightNew = leftNew + (rectLeft.width() + rectRight.width());
+        int bottomNew = getBottom();
+
+        measure(rectLeft.width() + rectRight.width() + ChineseDeviation, Math.max(rectLeft.height(), rectRight.height()) + ChineseDeviation);
+
+        layout(leftNew, topNew, rightNew, bottomNew);
+
+        invalidate();
+    }
 }
+
+
